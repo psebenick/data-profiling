@@ -1,0 +1,10 @@
+select
+'select ' SS
+, ''''||table_name||''' tablename,' as Table_name
+,'''|'',' D0
+, 'count(*) as Num_Rows'
+,' from '||owner||'.'||table_name||';'  FF
+from all_tables
+where owner='CIA';
+--prompt from &&tab
+--prompt where rownum <=&&row_limit
