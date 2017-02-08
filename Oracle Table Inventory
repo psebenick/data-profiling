@@ -1,0 +1,8 @@
+select owner, tablespace_name, count(*)
+ from all_tables
+ group by owner, tablespace_name
+ order by owner;
+ 
+SELECT * FROM ALL_TAB_COMMENTS
+WHERE OWNER IN ('STBMGR','MAMGR','STBRPTMGR')
+ORDER BY 1,2,3;
