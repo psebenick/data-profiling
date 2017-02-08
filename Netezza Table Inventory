@@ -1,0 +1,1 @@
+select database, tablename, reltuples,* from _v_table where database='PROD_LANDING' ;--and createdate > '2014-05-16 10:00:02';
