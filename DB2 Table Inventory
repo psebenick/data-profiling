@@ -1,0 +1,1 @@
+select name, creator, type from sysibm.systables
