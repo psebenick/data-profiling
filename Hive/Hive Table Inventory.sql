@@ -1,4 +1,4 @@
-show tables
+-- Hive SQL -- show tables
 
 -- connect to hive metastore mySQL database -- this contains the data dictionary for hive
 select
