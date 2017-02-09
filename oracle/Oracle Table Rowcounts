@@ -1,3 +1,5 @@
+--generate a SQL script that select count(*) from each table
+
 select
 'select ' SS
 , ''''||table_name||''' tablename,' as Table_name
