@@ -1,0 +1,21 @@
+SELECT * FROM ALL_COL_COMMENTS
+WHERE OWNER IN ('STBMGR','STBRPTMGR','MAMGR')
+ORDER BY 1,2,3;
+
+
+Select  OWNER,table_name, column_id, column_name,
+--data_type, 
+data_type || ' ' || decode (data_type,
+'DATE',' ',
+'TIMESTAMP(6)',' ',
+'CHAR',TO_CHAR(DATA_LENGTH),
+'VARCHAR2',TO_CHAR(DATA_LENGTH),
+'RAW',' ',
+TO_CHAR(DATA_PRECISION)||','||TO_CHAR(DATA_SCALE)) DATATYPE,
+NULLABLE, NUM_DISTINCT, NUM_NULLS
+--data_length,data_precision,data_scale
+from all_tab_columns
+where
+owner in ('STBMGR','MAMGR','STBRPTMGR')
+and table_name not like '%ERR'
+order by 1,2
