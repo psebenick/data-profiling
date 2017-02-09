@@ -1,0 +1,11 @@
+Select  T.Owner,T.Database, T.TableName Table_Name, T.reltuples Num_Rows,
+C.AttName Column_Name, C.Attnum, C.Format_type, C.attnotnull, C.ZMAPPED,
+decode (ATTDISPERSION,0,0,round(1.0/C.ATTDISPERSION)) num_distinct, 
+S.NULLFRAC,-- S.COMMONFRAC, S.RECENT, S.COMMONVAL, 
+S.LOVAL, S.HIVAL,d.distattnum as distributed_attnum
+from _v_relation_column C
+JOIN _V_STATISTIC S ON C.OBJID=S.OBJID AND C.ATTNUM=S.ATTNUM
+left join _v_table_dist_map d on c.objid=d.objid and c.attnum=d.attnum
+join _v_table T on C.Name=T.tablename
+where C.type='TABLE' and C.database = 'PROD_LANDING'
+order by 1,2,3,6;
