@@ -1,0 +1,8 @@
+-- generat a sql script to obtain the list of values and num of distinct values for low-cardinality columns
+select 
+'SELECT '''||OWNER||'.'||TABLE_NAME||'.'||COLUMN_NAME||'|'','|| COLUMN_NAME ||',',
+'''|''',
+', COUNT(*) FROM ' ||OWNER||'.'||TABLE_NAME|| ' GROUP BY ' || COLUMN_NAME|| ' ORDER BY 3 desc;'
+FROM ALL_TAB_COLUMNS  tc
+WHERE owner='CIA' and NUM_DISTINCT between 1 and 25
+order by tc.owner,table_name,column_name;
