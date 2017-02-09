@@ -1,0 +1,22 @@
+
+--script to generate the collection of  min,max,num_distinct,num_null for each column in each table.
+select
+'select ' SS
+, ''''||table_name||''' tab,' as Table_name
+,'''|'',' D0
+, ''''||column_name||''' col,' as Column_name
+,'''|'',' D1
+,'count(distinct '||column_name||') num_distict, ' C2
+,'''|'',' D2
+,'sum(decode('||column_name||',null,1,0)) num_nulls, ' C3
+,'''|'',' D3
+,'max(length('||column_name||')) max_len, ' C4
+,'''|'',' D4
+,'min('||column_name||') min_val, ' C5
+,'''|'',' D5
+,'max('||column_name||') max_val' C6
+,' from '||owner||'.'||table_name||';'  FF
+from all_tab_columns
+where owner='CIA';
+--prompt from &&tab
+--prompt where rownum <=&&row_limit
