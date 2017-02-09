@@ -1,0 +1,17 @@
+--script to generate sql script that selects min, max, num_distinct for each table-column
+
+select 
+'select ' ,
+''''+t.table_name+'.'+c.column_name+'''' +','  , 
+'''|'',' ,
+'count(distinct '+c.column_name+'),'  ,
+'''|'',' ,
+'min('+c.column_name+'),'  ,
+'''|'',' ,
+'max( '+c.column_name+')' ,
+' from ' +'com.'+ t.table_name+';'
+  from syscolumn c join systable t on (t.table_id=c.table_id)
+  where
+  t.table_name ='COM_CUSTOMER_DIM'
+  -- t.table_name like 'BHTV%DIM'
+  --or t.table_name like 'BHTV%FACT'
