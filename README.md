@@ -18,7 +18,7 @@ The high level steps addressed by this repository include:
   1.  Inventory of databases (schemas)
   1.  Inventory and metadata of tables within the databases
   1.  Inventory and metadata of columns with the tables
-  1.  For each column we can then dig into the details ( i.e. distribution of list of values for low cardinality columns)
+  1.  For each column we can then dig into the details ( i.e. frequency distribution or list of values for columns)
   
 Databases Platforms
 -------------------
