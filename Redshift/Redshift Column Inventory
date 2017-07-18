@@ -1,0 +1,3 @@
+select * from svv_columns where table_schema not in ('pg_catalog','pg_internal','information_schema') order by table_name,ordinal_position;
+
+select * from pg_table_def where schemaname not in ('pg_catalog','pg_internal','information_schema');
