@@ -1,0 +1,5 @@
+select datname,datdba,usename as owner from pg_database d join pg_user u on d.datdba=u.usesysid;
+select * from svv_tables where table_schema not in ('pg_catalog','pg_internal','information_schema') ;
+
+select "database","schema",table_id,"table",tbl_rows,size,"diststyle",sortkey1,sortkey_num
+from svv_table_info where schema not in ('pg_catalog','pg_internal','information_schema');
