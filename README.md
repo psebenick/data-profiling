@@ -31,5 +31,6 @@ The following databases have scripts in this repository:
   	* Sybase IQ
   	* Netezza
   	* Hive
+    * AWS Redshift
  
   
