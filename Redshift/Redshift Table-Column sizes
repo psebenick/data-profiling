@@ -1,0 +1,7 @@
+select t.database,t.schema, b.tbl,t.table, b.col, a.attname,count(*) num_blocks
+from stv_blocklist b
+join svv_table_info t on (b.tbl=t.table_id)
+left join pg_attribute a on (b.tbl=a.attrelid and b.col=a.attnum-1)
+where t.schema not in ('pg_catalog','pg_internal','information_schema')
+group by t.database,t.schema, b.tbl,t.table, b.col, a.attname
+order by 1,2,3,4,5;
