@@ -1,0 +1,6 @@
+select t.database,t.schema, t.table, a.attname,s.staattnum,s.stadistinct,s.stawidth,stanullfrac,stakind1,staop1
+from pg_statistic s
+join svv_table_info t on (s.starelid=t.table_id)
+left join pg_attribute a on (s.staattnum=a.attnum and s.starelid=attrelid)
+where t.schema not in ('pg_catalog','pg_internal','information_schema')
+order by 1,2,3,5,6;
