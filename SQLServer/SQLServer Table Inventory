@@ -3,7 +3,7 @@ DECLARE @SQL NVARCHAR(MAX)
 SELECT @SQL = COALESCE(@SQL,'') + '
 insert into AllTables
 select ' + QUOTENAME(name,'''') + ' as [DB Name], [Table_Schema] as [Table Schema], [Table_Name] as [Table Name] from ' +
-QUOTENAME(Name) + '.INFORMATION_SCHEMA.Tables;' FROM sys.databases
+QUOTENAME(Name) + '.INFORMATION_SCHEMA.Tables;' FROM sys.databases where name not in ('model','master','msdb')
 ORDER BY name
  print @SQL
 EXECUTE(@SQL)
