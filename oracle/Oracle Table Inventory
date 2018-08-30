@@ -3,6 +3,11 @@ select owner, tablespace_name, count(*)
  group by owner, tablespace_name
  order by owner;
  
+ select owner,table_name,tablespace_name ,last_analyzed,
+NUM_ROWS,AVG_ROW_LEN,BLOCKS,CACHE,PARTITIONED,COMPRESSION
+from all_tables
+order by 1,2
+
 SELECT * FROM ALL_TAB_COMMENTS
 WHERE OWNER IN ('STBMGR','MAMGR','STBRPTMGR')
 ORDER BY 1,2,3;
