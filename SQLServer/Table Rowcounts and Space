@@ -1,3 +1,22 @@
+CREATE TABLE #SpaceUsed (
+	 TableName sysname
+	,NumRows BIGINT
+	,ReservedSpace VARCHAR(50)
+	,DataSpace VARCHAR(50)
+	,IndexSize VARCHAR(50)
+	,UnusedSpace VARCHAR(50)
+	) ;
+
+DECLARE @str VARCHAR(500)
+SET @str =  'exec sp_spaceused ''?'''
+INSERT INTO #SpaceUsed 
+EXEC sp_msforeachtable @command1=@str
+
+SELECT distinct * FROM #SpaceUsed ORDER BY TableName;
+drop table #SpaceUsed;
+
+
+
 SELECT 
     t.NAME AS TableName,
     s.Name AS SchemaName,
