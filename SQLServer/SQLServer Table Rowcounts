@@ -1,9 +1,9 @@
 USE [YourDBName] -- replace your dbname
 GO
 SELECT
-s.Name AS SchemaName,
-t.Name AS TableName,
-p.rows AS RowCount,
+s.Name AS Schema_Name,
+t.Name AS Table_Name,
+p.rows AS Row_Count,
 CAST(ROUND((SUM(a.used_pages) / 128.00), 2) AS NUMERIC(36, 2)) AS Used_MB,
 CAST(ROUND((SUM(a.total_pages) - SUM(a.used_pages)) / 128.00, 2) AS NUMERIC(36, 2)) AS Unused_MB,
 CAST(ROUND((SUM(a.total_pages) / 128.00), 2) AS NUMERIC(36, 2)) AS Total_MB
