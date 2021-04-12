@@ -9,16 +9,40 @@ declare @dynamicsql nvarchar(max);
 create table #colstats( tab NVARCHAR(MAX), col NVARCHAR(MAX), datatype NVARCHAR(MAX), num_distinct int, num_null int, min_val NVARCHAR(MAX), max_val NVARCHAR(MAX));
 
 set @tabcolcursor = cursor for
+with T as
+(
+SELECT
+s.Name AS Schema_Name,
+t.Name AS Table_Name,
+t.object_id,
+t.type_desc,
+p.rows AS Row_Count,
+CAST(ROUND((SUM(a.used_pages) / 128.00), 2) AS NUMERIC(36, 2)) AS Used_MB,
+CAST(ROUND((SUM(a.total_pages) - SUM(a.used_pages)) / 128.00, 2) AS NUMERIC(36, 2)) AS Unused_MB,
+CAST(ROUND((SUM(a.total_pages) / 128.00), 2) AS NUMERIC(36, 2)) AS Total_MB
+FROM sys.tables t
+INNER JOIN sys.indexes i ON t.OBJECT_ID = i.object_id
+INNER JOIN sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
+INNER JOIN sys.allocation_units a ON p.partition_id = a.container_id
+INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
+where p.index_id IN ( 0, 1 )
+GROUP BY t.Name, t.object_id,t.type_desc,s.Name, p.Rows
+)
 SELECT --top 10 
- t.name ,
+ T.schema_name,
+ T.Table_name ,
  c.name ,
  tt.name  
 from sys.all_columns c
-join sys .all_objects  t on  (c.object_id=t.object_id and t.type_desc='USER_TABLE')
+join T on  (c.object_id=T.object_id and T.type_desc='USER_TABLE')
 join sys.types tt on (c.system_type_id=tt.user_type_id)
 where
-t.name  like 'CS%'
-order by t.name,c.column_id
+--s.name in ('Staging','Integration')
+T.row_count>0 and
+T.table_name  = 'Office'
+--('Item','AppSch_AuditLog','Inscarrier','ItemExam')*/
+order by 1,2,3
+;
 
 open @tabcolcursor
 fetch next from @tabcolcursor into @tab, @col, @datatype
