@@ -1,0 +1,10 @@
+14
+-- for INNODB engine, these are estimates and not actual row counts
+
+show table status;
+
+
+ SELECT TABLE_NAME,SUM(TABLE_ROWS) 
+ FROM INFORMATION_SCHEMA.TABLES 
+ WHERE TABLE_SCHEMA = 'your_db' 
+ GROUP BY TABLE_NAME;
