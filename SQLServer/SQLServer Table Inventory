@@ -1,4 +1,6 @@
-select * from sys.databases;
+SELECT @@servername as servername, name as database_name, database_id, create_date
+FROM sys.databases ;
+
 select * from information_schema.tables;
 
 
@@ -13,4 +15,32 @@ ORDER BY name
  print @SQL
 EXECUTE(@SQL)
 
-SELECT * FROM AllTables ORDER BY [DB Name],[SCHEMA NAME], [Table Name]
+with c as
+(
+select db_name() as database_name, s.name schema_name,t.name table_name,count(*) as num_columns 
+ from sys.all_columns c
+join sys.all_objects  t on  (c.object_id=t.object_id and t.type_desc='USER_TABLE')
+join sys.types tt on (c.system_type_id=tt.user_type_id)
+JOIN sys.schemas s ON t.schema_id = s.schema_id
+group by s.name,t.name
+)
+SELECT
+@@servername as servername,
+db_name() as database_name,
+s.Name AS Schema_Name,
+t.Name AS Table_Name,
+c.num_columns as column_count,
+p.rows AS Row_Count,
+CAST(ROUND((SUM(a.used_pages) / 128.00), 2) AS NUMERIC(36, 2)) AS Used_MB,
+CAST(ROUND((SUM(a.total_pages) - SUM(a.used_pages)) / 128.00, 2) AS NUMERIC(36, 2)) AS Unused_MB,
+CAST(ROUND((SUM(a.total_pages) / 128.00), 2) AS NUMERIC(36, 2)) AS Total_MB
+FROM sys.tables t
+INNER JOIN sys.indexes i ON t.OBJECT_ID = i.object_id
+INNER JOIN sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
+INNER JOIN sys.allocation_units a ON p.partition_id = a.container_id
+INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
+inner join c on c.schema_name=s.name and c.table_name=t.name
+where p.index_id IN ( 0, 1 )
+GROUP BY t.Name, s.Name, p.Rows,c.num_columns
+ORDER BY s.Name, t.Name;
+
