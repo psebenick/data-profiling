@@ -17,7 +17,7 @@ The high level steps addressed by this repository include:
 
   1.  Inventory of databases (schemas)
   1.  Inventory and metadata of tables within the databases
-  1.  Inventory and metadata of columns with the tables
+  1.  Inventory and metadata of columns with the tables ( count distinct values, num nulls, min, max)
   1.  For each column we can then dig into the details ( i.e. frequency distribution or list of values for columns)
   
 Databases Platforms
@@ -32,5 +32,7 @@ The following databases have scripts in this repository:
   	* Netezza
   	* Hive
     * AWS Redshift
+    * Snowflake
+    * AWS Synapse
  
   
