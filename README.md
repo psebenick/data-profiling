@@ -6,7 +6,7 @@ It facilitates the bulk and rapid collection of high level and common metadata a
 
 The scripts are intended to be used within your own particular client user interface and assumes you are able to connect to the database from which you want to collect data.   It is also up to you to dump the results out to whatever output meduim you want.   Generally by saving the results as a spreadsheet, csv, or cutting and pasting the results from your user interface.   This allows the greatest degree of flexibility.  
 
-This repostiory is not meant to provide very deep data profiling capabilities,  other tools such as Informatica, Talend, InfoShere and others can do that much better.  
+This repository is not meant to provide very deep data profiling capabilities,  other data commercial and open source analytic and data management tools scan do that much better.  
 
 We get this most of the meta data from the internal data dictionary of the database system.   Some meta data can only be obtained by querying the the tables themselves.   Since performance can often be a problem when profiling large tables, we don't try to do this in bulk for an entire database.  This is where the more expensive and sophisticated tools are most useful.
 
@@ -16,13 +16,13 @@ Data Profiling generally consists of a series of steps that dig deeper and deepe
 The high level steps addressed by this repository include: 
 
   1.  Inventory of databases (schemas)
-  1.  Inventory and metadata of tables within the databases
-  1.  Inventory and metadata of columns with the tables ( count distinct values, num nulls, min, max)
-  1.  For each column we can then dig into the details ( i.e. frequency distribution or list of values for columns)
+  2.  Inventory and metadata of tables within the databases
+  3.  Inventory and metadata of columns with the tables ( count distinct values, num nulls, min, max)
+  4.  For each column we can then dig into the details ( i.e. frequency distribution or list of values for columns) and relationship to other tables/columns
   
 Databases Platforms
 -------------------
-Since each database platform has it's own propiatary data dictionary, each platform has it's owns set of scripts.
+Since each database platform has it's own specific data dictionary, each platform has it's owns set of scripts.
 The following databases have scripts in this repository:
 
   	* Oracle
